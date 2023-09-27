@@ -1,0 +1,10 @@
+insert into name (cca2,common,official) values('ZA',"South Africa","Republic of South Africa");
+insert into name (cca2,common,official) values("SJ","Svalbard and Jan Mayen","Svalbard og Jan Mayen");
+insert into name (cca2,common,official) values("WS","Samoa","Independent State of Samoa");
+insert into name (cca2,common,official) values("GM","Gambia","Republic of the Gambia");
+insert into name (cca2,common,official) values("KN","Saint Kitts and Nevis","Federation of Saint Christopher and Nevis");
+insert into name (cca2,common,official) values("MC","Monaco","Principality of Monaco");
+insert into name (cca2,common,official) values("AW","Aruba","Aruba");
+insert into name (cca2,common,official) values("GW","Guinea-Bissau","Republic of Guinea-Bissau");
+insert into name (cca2,common,official) values("KP","North Korea","Democratic People's Republic of Korea");
+insert into name (cca2,common,official) values("PY","Paraguay","Republic of Paraguay");
