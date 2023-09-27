@@ -1,0 +1,10 @@
+insert into continents(cca2,name) values("ZA","Africa");
+insert into continents(cca2,name) values("SJ","Europe");
+insert into continents(cca2,name) values("WS","Oceania");
+insert into continents(cca2,name) values("GM","Africa");
+insert into continents(cca2,name) values("KN","North America");
+insert into continents(cca2,name) values("MC","Europe");
+insert into continents(cca2,name) values("AW","North America");
+insert into continents(cca2,name) values("GW","Africa");
+insert into continents(cca2,name) values("KP","Asia");
+insert into continents(cca2,name) values("PY","South America");
