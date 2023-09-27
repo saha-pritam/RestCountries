@@ -1,0 +1,10 @@
+insert into idd_suffixes(cca2,suffix) values("ZA","7");
+insert into idd_suffixes(cca2,suffix) values("SJ","779");
+insert into idd_suffixes(cca2,suffix) values("WS","85");
+insert into idd_suffixes(cca2,suffix) values("GM","20");
+insert into idd_suffixes(cca2,suffix) values("KN","869");
+insert into idd_suffixes(cca2, suffix) values("MC","77");
+insert into idd_suffixes(cca2, suffix) values("AW","97");
+insert into idd_suffixes(cca2, suffix) values("GW","45");
+insert into idd_suffixes(cca2, suffix) values("KP","50");
+insert into idd_suffixes(cca2, suffix) values("PY","95");
