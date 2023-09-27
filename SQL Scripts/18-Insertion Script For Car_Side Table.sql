@@ -7,3 +7,4 @@ insert into car_side(cca2,side) values("MC","right");
 insert into car_side(cca2,side) values("GW","right");
 insert into car_side(cca2,side) values("KP","right");
 insert into car_side(cca2,side) values("PY","right");
+insert into car_side(cca2,side) values("AW","right");
