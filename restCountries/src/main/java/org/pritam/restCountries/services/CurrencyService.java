@@ -32,4 +32,12 @@ public class CurrencyService {
 		}
 		return treeMap;
 	}
+	
+	@Transactional
+	public List<String> getCountryByCurrencyCodeOrName(String currencyCodeOrName) {
+		Optional<List<String>> cca2List= currencyRepository.findByCurrencyCodeOrName(currencyCodeOrName);
+		if(cca2List.isPresent() && cca2List.get().size()>0)
+			return cca2List.get();
+		return null;
+	}
 }
