@@ -13,4 +13,7 @@ public interface NameRepository extends CrudRepository<Name, Integer> {
 	
 	@Query("select name.cca2 from Name name where name.common like :pattern or name.official like :pattern")
 	public Optional<List<String>> findCca2ByCommonOrOfficialPatternMatch(@Param("pattern")String pattern);
+	
+	@Query("select name.cca2 from Name name where name.common=:pattern or name.official=:pattern")
+	public Optional<List<String>> findCca2ByCommonOrOfficialFullMatch(@Param("pattern")String pattern);
 }

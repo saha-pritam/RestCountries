@@ -36,4 +36,12 @@ public class NameService {
 			return listOfCca2.get();
 		return null;
 	}
+	
+	@Transactional
+	public List<String> getCca2ByCommonOrOfficialFullMatch(String pattern){
+		Optional<List<String>> listOfCca2 = nameRepository.findCca2ByCommonOrOfficialFullMatch(pattern);
+		if(listOfCca2.isPresent() && listOfCca2.get().size()>0)
+			return listOfCca2.get();
+		return null;
+	}
 }

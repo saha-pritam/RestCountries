@@ -37,6 +37,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -104,7 +105,7 @@ public class RestCountriesController {
 			country.setCurrencies(currencyService.getCurrencies(country.getCca2()));
 			country.setIdd(new Idd());
 			country.getIdd().setRoot(iddService.getIddRoot(country.getCca2()));
-			country.getIdd().setSuffixes(iddService.getIddSuffixes(country.getCca2()));	
+			country.getIdd().setSuffixes(iddService.getIddSuffixes(country.getCca2()));
 			country.setCapital(capitalService.getCapital(country.getCca2()));
 			country.setAltSpellings(altSpellingsService.getAltSpellings(country.getCca2()));
 			country.setLanguages(languagesService.getLanguages(country.getCca2()));
@@ -124,16 +125,23 @@ public class RestCountriesController {
 		});
 		return new ResponseEntity<>(allCountries, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/name/{name}")
-	public ResponseEntity<Object> name(@PathVariable("name") String name){
-		List<String> cca2List = nameService.getCca2ByCommonOrOfficialPatternMatch(name);
-		if(cca2List==null) {
+	public ResponseEntity<Object> name(@PathVariable("name") String name,
+			@RequestParam(name = "fullText", required = false) boolean fullText) {
+		List<String> cca2List = null;
+
+		if (fullText)
+			cca2List = nameService.getCca2ByCommonOrOfficialFullMatch(name);
+		else
+			cca2List = nameService.getCca2ByCommonOrOfficialPatternMatch(name);
+
+		if (cca2List == null) {
 			Error error = new Error(404, "There are no countries found with the provided name in the database.");
 			return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 		}
-		
-		List<Object> countryList = cca2List.stream().map(countryCca2->{
+
+		List<Object> countryList = cca2List.stream().map(countryCca2 -> {
 			Country country = countryService.getCountryByCca2(countryCca2);
 			country.setName(nameService.getName(country.getCca2()));
 			TreeMap<String, LinkedHashMap<String, String>> m = nativeNameService.getNativeNames(country.getCca2());
@@ -143,7 +151,7 @@ public class RestCountriesController {
 			country.setCurrencies(currencyService.getCurrencies(country.getCca2()));
 			country.setIdd(new Idd());
 			country.getIdd().setRoot(iddService.getIddRoot(country.getCca2()));
-			country.getIdd().setSuffixes(iddService.getIddSuffixes(country.getCca2()));	
+			country.getIdd().setSuffixes(iddService.getIddSuffixes(country.getCca2()));
 			country.setCapital(capitalService.getCapital(country.getCca2()));
 			country.setAltSpellings(altSpellingsService.getAltSpellings(country.getCca2()));
 			country.setLanguages(languagesService.getLanguages(country.getCca2()));
