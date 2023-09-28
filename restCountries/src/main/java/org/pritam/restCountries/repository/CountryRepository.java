@@ -17,4 +17,7 @@ public interface CountryRepository extends CrudRepository<Country, String> {
 	
 	@Query("select country.cca2 from Country country where country.region=:regionName")
 	public Optional<List<String>> findByRegion(@Param("regionName")String regionName);
+	
+	@Query("select country.cca2 from Country country where country.subregion=:subRegionName")
+	public Optional<List<String>> findBySubRegion(@Param("subRegionName")String subRegionName);
 }

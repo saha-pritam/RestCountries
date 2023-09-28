@@ -52,4 +52,12 @@ public class CountryService {
 			return cca2List.get();
 		return null;
 	}
+	
+	@Transactional
+	public List<String> getCountryBySubRegionName(String subRegionName) {
+		Optional<List<String>> cca2List= countryRepository.findBySubRegion(subRegionName);
+		if(cca2List.isPresent() && cca2List.get().size()>0)
+			return cca2List.get();
+		return null;
+	}
 }
