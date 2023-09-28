@@ -27,4 +27,12 @@ public class LanguagesService {
 		}
 		return treeMap;
 	}
+	
+	@Transactional
+	public List<String> getCountryByLanguagesCodeOrName(String languagesCodeOrName) {
+		Optional<List<String>> cca2List= languagesRepository.findByLanguagesCodeOrName(languagesCodeOrName);
+		if(cca2List.isPresent() && cca2List.get().size()>0)
+			return cca2List.get();
+		return null;
+	}
 }
