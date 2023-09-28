@@ -1,6 +1,7 @@
 package org.pritam.restCountries.services;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Optional;
 
 import org.pritam.restCountries.entity.Name;
@@ -26,5 +27,13 @@ public class NameService {
 			linkedHashMap.put("official", name.get().getOfficial());
 		}
 		return linkedHashMap;
+	}
+	
+	@Transactional
+	public List<String> getCca2ByCommonOrOfficialPatternMatch(String pattern){
+		Optional<List<String>> listOfCca2 = nameRepository.findCca2ByCommonOrOfficialPatternMatch("%"+pattern+"%");
+		if(listOfCca2.isPresent() && listOfCca2.get().size()>0)
+			return listOfCca2.get();
+		return null;
 	}
 }
