@@ -22,4 +22,12 @@ public class CapitalService {
 			return capital.get();
 		return null;
 	}
+	
+	@Transactional
+	public List<String> getCountryByCapitalName(String capitalName) {
+		Optional<List<String>> cca2List= capitalRepository.findByCapital(capitalName);
+		if(cca2List.isPresent() && cca2List.get().size()>0)
+			return cca2List.get();
+		return null;
+	}
 }
