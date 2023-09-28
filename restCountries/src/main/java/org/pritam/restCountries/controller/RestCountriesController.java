@@ -1,0 +1,124 @@
+package org.pritam.restCountries.controller;
+
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
+
+import org.pritam.restCountries.entity.Country;
+import org.pritam.restCountries.model.Idd;
+import org.pritam.restCountries.model.Error;
+import org.pritam.restCountries.services.AltSpellingsService;
+import org.pritam.restCountries.services.BordersService;
+import org.pritam.restCountries.services.CapitalInfoLatLngService;
+import org.pritam.restCountries.services.CapitalService;
+import org.pritam.restCountries.services.CarService;
+import org.pritam.restCountries.services.CoatOfArmsService;
+import org.pritam.restCountries.services.ContinentsService;
+import org.pritam.restCountries.services.CountryService;
+import org.pritam.restCountries.services.CurrencyService;
+import org.pritam.restCountries.services.DemonymsService;
+import org.pritam.restCountries.services.FlagsService;
+import org.pritam.restCountries.services.GiniService;
+import org.pritam.restCountries.services.IddService;
+import org.pritam.restCountries.services.LanguagesService;
+import org.pritam.restCountries.services.LatLngService;
+import org.pritam.restCountries.services.MapsService;
+import org.pritam.restCountries.services.NameService;
+import org.pritam.restCountries.services.NativeNameService;
+import org.pritam.restCountries.services.PostalCodeService;
+import org.pritam.restCountries.services.TimezonesService;
+import org.pritam.restCountries.services.TldService;
+import org.pritam.restCountries.services.TranslationsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/v3.1")
+public class RestCountriesController {
+
+	@Autowired
+	private CountryService countryService;
+	@Autowired
+	private NameService nameService;
+	@Autowired
+	private NativeNameService nativeNameService;
+	@Autowired
+	private TldService tldService;
+	@Autowired
+	private CurrencyService currencyService;
+	@Autowired
+	private IddService iddService;
+	@Autowired
+	private CapitalService capitalService;
+	@Autowired
+	private AltSpellingsService altSpellingsService;
+	@Autowired
+	private LanguagesService languagesService;
+	@Autowired
+	private TranslationsService translationsService;
+	@Autowired
+	private LatLngService latLngService;
+	@Autowired
+	private BordersService bordersService;
+	@Autowired
+	private DemonymsService demonymsService;
+	@Autowired
+	private MapsService mapsService;
+	@Autowired
+	private GiniService giniService;
+	@Autowired
+	private CarService carService;
+	@Autowired
+	private TimezonesService timezonesService;
+	@Autowired
+	private ContinentsService continentsService;
+	@Autowired
+	private FlagsService flagsService;
+	@Autowired
+	private CoatOfArmsService coatOfArmsService;
+	@Autowired
+	private CapitalInfoLatLngService capitalInfoLatLngService;
+	@Autowired
+	private PostalCodeService postalCodeService;
+
+	@GetMapping("/all")
+	public ResponseEntity<Object> all() {
+		Iterable<Country> allCountries = countryService.getAllCountries();
+		if (((Collection<?>) allCountries).size() == 0) {
+			Error error = new Error(404, "There are no countries in the database.");
+			return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+		}
+		allCountries.forEach(country -> {
+			country.setName(nameService.getName(country.getCca2()));
+			TreeMap<String, LinkedHashMap<String, String>> m = nativeNameService.getNativeNames(country.getCca2());
+			if (m != null)
+				country.getName().put("nativeName", m);
+			country.setTld(tldService.getTld(country.getCca2()));
+			country.setCurrencies(currencyService.getCurrencies(country.getCca2()));
+			country.setIdd(new Idd());
+			country.getIdd().setRoot(iddService.getIddRoot(country.getCca2()));
+			country.getIdd().setSuffixes(iddService.getIddSuffixes(country.getCca2()));	
+			country.setCapital(capitalService.getCapital(country.getCca2()));
+			country.setAltSpellings(altSpellingsService.getAltSpellings(country.getCca2()));
+			country.setLanguages(languagesService.getLanguages(country.getCca2()));
+			country.setTranslations(translationsService.getTranslations(country.getCca2()));
+			country.setLatlng(latLngService.getLatLng(country.getCca2()));
+			country.setBorders(bordersService.getBorders(country.getCca2()));
+			country.setDemonyms(demonymsService.getDemonyms(country.getCca2()));
+			country.setMaps(mapsService.getMaps(country.getCca2()));
+			country.setGini(giniService.getGini(country.getCca2()));
+			country.setCar(carService.getCar(country.getCca2()));
+			country.setTimezones(timezonesService.getTimezones(country.getCca2()));
+			country.setContinents(continentsService.getContinents(country.getCca2()));
+			country.setFlags(flagsService.getCoatOfArms(country.getCca2()));
+			country.setCoatOfArms(coatOfArmsService.getCoatOfArms(country.getCca2()));
+			country.setCapitalInfo(capitalInfoLatLngService.getLatLng(country.getCca2()));
+			country.setPostalCode(postalCodeService.getPostalCode(country.getCca2()));
+		});
+		return new ResponseEntity<>(allCountries, HttpStatus.OK);
+	}
+}
