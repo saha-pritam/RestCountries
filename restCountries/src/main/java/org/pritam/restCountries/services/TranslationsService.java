@@ -34,4 +34,12 @@ public class TranslationsService {
 		}
 		return treeMap;
 	}
+	
+	@Transactional
+	public List<String> getCountryByTranslationOfficialOrCommon(String translationOfficialOrCommon) {
+		Optional<List<String>> cca2List= translationsRepository.findByTranslationsOfficialOrCommon(translationOfficialOrCommon);
+		if(cca2List.isPresent() && cca2List.get().size()>0)
+			return cca2List.get();
+		return null;
+	}
 }
