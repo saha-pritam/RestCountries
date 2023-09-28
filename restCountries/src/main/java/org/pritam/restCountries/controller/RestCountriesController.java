@@ -214,4 +214,46 @@ public class RestCountriesController {
 		}).collect(Collectors.toList());
 		return new ResponseEntity<>(countryList, HttpStatus.OK);
 	}
+	
+	@GetMapping("/alpha")
+	public ResponseEntity<Object> listOfCode(@RequestParam(name="codes",required = true)List<String> codes) {
+		List<String> cca2List = null;
+		cca2List = countryService.getCountryByListOfCodes(codes);
+
+		if (cca2List == null) {
+			Error error = new Error(404, "There are no countries found with the provided codes in the database.");
+			return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+		}
+
+		List<Object> countryList = cca2List.stream().map(countryCca2 -> {
+			Country country = countryService.getCountryByCca2(countryCca2);
+			country.setName(nameService.getName(country.getCca2()));
+			TreeMap<String, LinkedHashMap<String, String>> m = nativeNameService.getNativeNames(country.getCca2());
+			if (m != null)
+				country.getName().put("nativeName", m);
+			country.setTld(tldService.getTld(country.getCca2()));
+			country.setCurrencies(currencyService.getCurrencies(country.getCca2()));
+			country.setIdd(new Idd());
+			country.getIdd().setRoot(iddService.getIddRoot(country.getCca2()));
+			country.getIdd().setSuffixes(iddService.getIddSuffixes(country.getCca2()));
+			country.setCapital(capitalService.getCapital(country.getCca2()));
+			country.setAltSpellings(altSpellingsService.getAltSpellings(country.getCca2()));
+			country.setLanguages(languagesService.getLanguages(country.getCca2()));
+			country.setTranslations(translationsService.getTranslations(country.getCca2()));
+			country.setLatlng(latLngService.getLatLng(country.getCca2()));
+			country.setBorders(bordersService.getBorders(country.getCca2()));
+			country.setDemonyms(demonymsService.getDemonyms(country.getCca2()));
+			country.setMaps(mapsService.getMaps(country.getCca2()));
+			country.setGini(giniService.getGini(country.getCca2()));
+			country.setCar(carService.getCar(country.getCca2()));
+			country.setTimezones(timezonesService.getTimezones(country.getCca2()));
+			country.setContinents(continentsService.getContinents(country.getCca2()));
+			country.setFlags(flagsService.getCoatOfArms(country.getCca2()));
+			country.setCoatOfArms(coatOfArmsService.getCoatOfArms(country.getCca2()));
+			country.setCapitalInfo(capitalInfoLatLngService.getLatLng(country.getCca2()));
+			country.setPostalCode(postalCodeService.getPostalCode(country.getCca2()));
+			return country;
+		}).collect(Collectors.toList());
+		return new ResponseEntity<>(countryList, HttpStatus.OK);
+	}
 }

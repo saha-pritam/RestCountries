@@ -36,4 +36,12 @@ public class CountryService {
 			return cca2List.get();
 		return null;
 	}
+	
+	@Transactional
+	public List<String> getCountryByListOfCodes(List<String> codes) {
+		Optional<List<String>> cca2List= countryRepository.findByListOfCodes(codes);
+		if(cca2List.isPresent() && cca2List.get().size()>0)
+			return cca2List.get();
+		return null;
+	}
 }
