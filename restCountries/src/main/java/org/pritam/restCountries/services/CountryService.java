@@ -1,5 +1,6 @@
 package org.pritam.restCountries.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.pritam.restCountries.entity.Country;
@@ -25,6 +26,14 @@ public class CountryService {
 		Optional<Country> country= countryRepository.findById(cca2);
 		if(country.isPresent())
 			return country.get();
+		return null;
+	}
+	
+	@Transactional
+	public List<String> getCountryByCode(String code) {
+		Optional<List<String>> cca2List= countryRepository.findByCode(code);
+		if(cca2List.isPresent() && cca2List.get().size()>0)
+			return cca2List.get();
 		return null;
 	}
 }
