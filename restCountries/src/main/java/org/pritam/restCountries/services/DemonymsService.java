@@ -35,4 +35,12 @@ public class DemonymsService {
 		}
 		return treeMap;
 	}
+	
+	@Transactional
+	public List<String> getCountryByDemonym(String demonym) {
+		Optional<List<String>> cca2List= demonymsRepository.findByDemonym(demonym);
+		if(cca2List.isPresent() && cca2List.get().size()>0)
+			return cca2List.get();
+		return null;
+	}
 }
