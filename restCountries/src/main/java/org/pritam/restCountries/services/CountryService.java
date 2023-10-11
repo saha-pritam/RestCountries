@@ -60,4 +60,12 @@ public class CountryService {
 			return cca2List.get();
 		return null;
 	}
+	
+	@Transactional
+	public List<String> getAllCca2() {
+		Optional<List<String>> cca2List= countryRepository.findAllCca2();
+		if(cca2List.isPresent() && cca2List.get().size()>0)
+			return cca2List.get();
+		return null;
+	}
 }

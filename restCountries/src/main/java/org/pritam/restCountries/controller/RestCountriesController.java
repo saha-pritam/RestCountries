@@ -91,12 +91,16 @@ public class RestCountriesController {
 
 	@GetMapping("/all")
 	public ResponseEntity<Object> all() {
-		Iterable<Country> allCountries = countryService.getAllCountries();
-		if (((Collection<?>) allCountries).size() == 0) {
-			Error error = new Error(404, "There are no countries in the database.");
+		List<String> cca2List = null;
+		cca2List = countryService.getAllCca2();
+		
+		if (cca2List == null) {
+			Error error = new Error(404, "No countries available in the database.");
 			return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 		}
-		allCountries.forEach(country -> {
+		
+		List<Object> countryList = cca2List.stream().map(countryCca2 -> {
+			Country country = countryService.getCountryByCca2(countryCca2);
 			country.setName(nameService.getName(country.getCca2()));
 			TreeMap<String, LinkedHashMap<String, String>> m = nativeNameService.getNativeNames(country.getCca2());
 			if (m != null)
@@ -122,8 +126,9 @@ public class RestCountriesController {
 			country.setCoatOfArms(coatOfArmsService.getCoatOfArms(country.getCca2()));
 			country.setCapitalInfo(capitalInfoLatLngService.getLatLng(country.getCca2()));
 			country.setPostalCode(postalCodeService.getPostalCode(country.getCca2()));
-		});
-		return new ResponseEntity<>(allCountries, HttpStatus.OK);
+			return country;
+		}).collect(Collectors.toList());
+		return new ResponseEntity<>(countryList, HttpStatus.OK);
 	}
 
 	@GetMapping("/name/{name}")
