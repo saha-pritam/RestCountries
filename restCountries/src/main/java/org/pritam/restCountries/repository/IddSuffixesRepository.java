@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface IddSuffixesRepository extends CrudRepository<IddSuffixes, Integer> {
 
-	@Query("select is.suffix from IddSuffixes is where is.cca2=:cca2")
+	@Query("select iddSuffixes.suffix from IddSuffixes iddSuffixes where iddSuffixes.cca2=:cca2")
 	public Optional<List<String>> findByCca2(@Param("cca2") String cca2);
 }

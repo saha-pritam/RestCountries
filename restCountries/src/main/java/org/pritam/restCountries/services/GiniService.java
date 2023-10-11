@@ -10,7 +10,7 @@ import org.pritam.restCountries.repository.GiniRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 
 @Service
 public class GiniService {
