@@ -272,7 +272,7 @@ public class RestCountriesController {
 		cca2List = translationsService.getCountryByTranslationOfficialOrCommon(translationOfficialOrCommon);
 
 		if (cca2List == null) {
-			Error error = new Error(404, "There are no countries found with the provided sub region name in the database.");
+			Error error = new Error(404, "There are no countries found with the provided translation in the database.");
 			return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 		}
 
