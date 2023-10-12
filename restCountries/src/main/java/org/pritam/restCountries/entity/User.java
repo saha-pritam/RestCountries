@@ -5,15 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name="users")
+@ApiModel
 public class User {
 	@Id
 	@Column(name="username")
+	@ApiModelProperty(example = "einstein")
 	private String username;
 	@Column(name="password")
+	@ApiModelProperty(example = "einstein@123")
 	private String password;
 	@Column(name="enabled")
+	@ApiModelProperty(example = "true")
 	private boolean enabled;
 	public User() {
 	}

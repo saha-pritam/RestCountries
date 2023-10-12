@@ -24,7 +24,9 @@ public class RestCountriesApplication {
 
 	@Bean
 	Docket getSwaggerConfiguration() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
+		return new Docket(DocumentationType.SWAGGER_2)
+				.useDefaultResponseMessages(false)
+				.select()
 				.apis(RequestHandlerSelectors.basePackage("org.pritam.restCountries.controller"))
 				.build()
 				.apiInfo(new ApiInfoBuilder()
