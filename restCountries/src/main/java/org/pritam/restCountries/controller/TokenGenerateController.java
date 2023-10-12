@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 import java.util.Base64;
 
@@ -23,7 +27,7 @@ import org.pritam.restCountries.security.jwt.JwtService;
 @RestController
 @RequestMapping("/v3.1")
 public class TokenGenerateController {
-	
+	private final String x="pritam";
 	@Autowired
 	private JwtService jwtService;
 	
@@ -33,8 +37,14 @@ public class TokenGenerateController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	@ApiOperation(value = "Generate JWT",notes = "This endpoints should be passed with an authorization header having value as basic authentication token. If the token is valid then it will generate a JWT. The generated JWT will be required to use as Bearer token for Authorization header in all the endpoints available in Country Endpoints section.")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "The request has been successfully executed", response = Token.class),
+		@ApiResponse(code = 400, message = "Authorization header is missing or it is of invalid format.",response = Error.class),
+		@ApiResponse(code = 401, message = "The basic token is invalid due to incorrect credentials.",response = Error.class)
+	})
 	@GetMapping("/generateToken")
-	public ResponseEntity<Object> generateToken(@RequestHeader(name = "Authorization",required = false) String authorization){
+	public ResponseEntity<Object> generateToken(@ApiParam(value = "Authorization value should be a valid basic authentication token",defaultValue = "Basic ZGVmYXVsdDpkZWZhdWx0QDEyMzQ=") @RequestHeader(name = "Authorization",required = false) String authorization){
 		
 		if(authorization==null) {
 			return new ResponseEntity<Object>(new Error(400,"Authorization Header Is Missing."),HttpStatus.BAD_REQUEST);
