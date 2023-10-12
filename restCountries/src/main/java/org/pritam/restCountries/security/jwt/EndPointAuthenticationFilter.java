@@ -27,8 +27,12 @@ public class EndPointAuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		try {
 		String authorization = request.getHeader("Authorization");
-		if(authorization!=null && authorization.startsWith("Bearer ")) {
+		if(authorization==null)
+			throw new Exception("There is no authorization header present in the request.");
+		else if(!authorization.startsWith("Bearer "))
+			throw new Exception("Token format is invalid.");
 			String token = authorization.substring(7);
 			String username = jwtService.extractUsername(token);
 			if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null) {
@@ -39,7 +43,17 @@ public class EndPointAuthenticationFilter extends OncePerRequestFilter {
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 				}
 			}
-			
+		}
+		catch(Exception e) {
+			if(request.getRequestURI().contains("/v3.1") && !request.getRequestURI().equals("/v3.1/generateToken"))
+			{
+				response.setStatus(401);
+				response.setContentType("application/json");
+				response.getOutputStream().println("{"
+						+ "\"errorCode\":401,"
+						+ "\"description\":\"" + e.getMessage() +"\""
+						+ "}");
+			}
 		}
 		filterChain.doFilter(request, response);
 	}

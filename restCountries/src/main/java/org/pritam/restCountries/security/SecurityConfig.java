@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @SuppressWarnings("deprecation")
@@ -23,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private EndPointAuthenticationFilter endPointAuthenticationFilter;
+	
+	@Autowired
+	private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     PasswordEncoder getPasswordEncoder() {
@@ -42,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.addFilterBefore(endPointAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
 	}
 
 	@Override
