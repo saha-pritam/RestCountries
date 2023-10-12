@@ -31,4 +31,9 @@ public class UserService {
 			return optionalUser.get();
 		return null;
 	}
+	
+	@Transactional
+	public void deleteUserByUserName(String username) {
+		userRepository.deleteById(username);
+	}
 }
