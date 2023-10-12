@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+@Api(tags = "1. User Endpoints", description = "Contain Info On Endpoints For User Creation, Modification And Deletion.")
 @RestController
 @RequestMapping("/user")
 public class UserController {

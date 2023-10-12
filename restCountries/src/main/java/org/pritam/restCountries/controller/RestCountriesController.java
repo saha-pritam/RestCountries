@@ -39,6 +39,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "3. Country Endpoints", description = "Contain Info On Endpoints For Country Related Details. ")
 @RestController
 @RequestMapping("/v3.1")
 public class RestCountriesController {

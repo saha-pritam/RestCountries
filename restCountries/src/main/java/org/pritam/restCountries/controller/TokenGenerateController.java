@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+
 import java.util.Base64;
 
 import org.pritam.restCountries.model.Error;
 import org.pritam.restCountries.model.Token;
 import org.pritam.restCountries.security.jwt.JwtService;
+@Api(tags = "2. JWT Endpoint", description = "Contains Info On Endpoint For JWT Generation.")
 @RestController
 @RequestMapping("/v3.1")
 public class TokenGenerateController {
