@@ -216,3 +216,10 @@ create table postalcode
     regex varchar(100),
     constraint fk_1_postalcode foreign key (cca2) references country(cca2)
 );
+
+create table users (
+  username varchar(100) NOT NULL,
+  password varchar(100) DEFAULT NULL,
+  enabled boolean,
+  PRIMARY KEY (`username`)
+) 
