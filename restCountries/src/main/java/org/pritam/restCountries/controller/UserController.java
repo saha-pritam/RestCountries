@@ -28,7 +28,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@ApiOperation(value = "Add User",notes = "This endpoints accepts a JSON payload which is of type user and adds the user to the database. Make sure the attributes username and password are mentioned in the payload. The attibute enabled is optional. The default value of enabled is false.",consumes = "application/json")
+	@ApiOperation(value = "Add User",notes = "This endpoints accepts a JSON payload which is of type user and adds the user to the database. Make sure the attributes username and password are mentioned in the payload. The attibute enabled is optional. The default value of enabled is false.",consumes = "application/json", produces = "application/json,text/plain")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "The request has been successfully executed", response = String.class),
 		@ApiResponse(code = 400, message = "Either username or password attribute is missing from payload.",response = Error.class),
@@ -49,7 +49,7 @@ public class UserController {
 		return new ResponseEntity<Object>("New User Successfully Created.",HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Update User",notes = "This endpoints accepts a JSON payload which is of type user and modifies the existing user in the database. Make sure the attributes username and password are mentioned in the payload. The attibute enabled is optional. The default value of enabled is false.",consumes = "application/json")
+	@ApiOperation(value = "Update User",notes = "This endpoints accepts a JSON payload which is of type user and modifies the existing user in the database. Make sure the attributes username and password are mentioned in the payload. The attibute enabled is optional. The default value of enabled is false.",consumes = "application/json", produces = "application/json,text/plain")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "The request has been successfully executed", response = String.class),
 		@ApiResponse(code = 400, message = "Either username or password attribute is missing from payload.",response = Error.class),
@@ -73,7 +73,7 @@ public class UserController {
 		return new ResponseEntity<Object>("User Successfully Updated.",HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Delete User",notes = "This endpoints accepts a path value which is basically the username we went to delete and it deletes the existing user in the database.")
+	@ApiOperation(value = "Delete User",notes = "This endpoints accepts a path value which is basically the username we went to delete and it deletes the existing user in the database.", produces = "application/json,text/plain")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "The request has been successfully executed", response = String.class),
 		@ApiResponse(code = 400, message = "Username is missing in the URL.",response = Error.class),

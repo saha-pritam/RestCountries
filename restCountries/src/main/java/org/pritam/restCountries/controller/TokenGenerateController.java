@@ -37,7 +37,7 @@ public class TokenGenerateController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	@ApiOperation(value = "Generate JWT",notes = "This endpoints should be passed with an authorization header having value as basic authentication token. If the token is valid then it will generate a JWT. The generated JWT will be required to use as Bearer token for Authorization header in all the endpoints available in Country Endpoints section.")
+	@ApiOperation(value = "Generate JWT",notes = "This endpoints should be passed with an authorization header having value as basic authentication token. If the token is valid then it will generate a JWT. The generated JWT will be required to use as Bearer token for Authorization header in all the endpoints available in Country Endpoints section.", produces = "application/json")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "The request has been successfully executed", response = Token.class),
 		@ApiResponse(code = 400, message = "Authorization header is missing or it is of invalid format.",response = Error.class),
