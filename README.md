@@ -1,1 +1,7 @@
 # RestCountries
+
+I took on the challenge of replicating the web services from https://restcountries.com/ (previously https://restcountries.eu/), going beyond a mere clone by incorporating additional features like JWT authentication and Swagger 2 for API documentation. The driving force behind this project was to continually refine my skills in a diverse range of technologies, including REST API, Java 8, Java Collection Framework, MySQL, Spring Boot, JPQL, Spring Security, JWT (JSON Web Token), Swagger 2, and tools like Postman and Eclipse. This endeavor not only mirrored an existing platform but also served as a comprehensive exercise to stay adept in the evolving landscape of web development, security, and documentation practices.
+
+To run this project, start by pulling the latest commit. Execute the "Schema Creation.sql" followed by other SQL scripts in order. Import the project into Eclipse or your preferred IDE, ensuring database details are specified in the properties file. Run the program, and before proceeding, review the API documentation at /swagger-ui.html for a comprehensive overview. This step-by-step process ensures proper setup and functionality for seamless execution.
+
+I encourage you to test out this project and share any feedback or suggestions you may have. I'm open to collaboration and welcome any insights that could enhance the project's functionality or improve its overall performance. Your input is valuable, and I look forward to working together to refine and optimize the project.
